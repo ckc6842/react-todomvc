@@ -1,10 +1,11 @@
-import { ChangeEvent, FC, KeyboardEvent, useState } from "react"
+import { ChangeEvent, FC, KeyboardEvent, useMemo, useState } from "react"
 import TodoItem from "./TodoItem"
-import { Todo } from "./types"
+import { Filter, Todo } from "./types"
 
 const TodoList: FC = () => {
   const [inputValue, setInputValue] = useState<string>('')
   const [todoList, setTodoList] = useState<Todo[]>([])
+  const [filter, setFilter] = useState<Filter>(Filter.All)
 
   const handleEnter = (e: KeyboardEvent) => {
     if (e.key !== 'Enter') return
@@ -23,6 +24,17 @@ const TodoList: FC = () => {
       ...todoList.slice(index + 1),
     ])
   }
+
+  const displayTodoList = useMemo(() => {
+    switch (filter) {
+      case Filter.All:
+        return todoList
+      case Filter.Active:
+        return todoList.filter((todo) => !todo.isCompleted)
+      case Filter.Completed:
+        return todoList.filter((todo) => todo.isCompleted)
+    }
+  }, [todoList, filter])
   
   return (
     <>
@@ -33,7 +45,7 @@ const TodoList: FC = () => {
         onKeyDown={handleEnter}
       />
       <ul>
-        {todoList.map((todoItem, index) => (
+        {displayTodoList.map((todoItem, index) => (
           <TodoItem
             key={index}
             index={index}
@@ -42,6 +54,9 @@ const TodoList: FC = () => {
           />
         ))}
       </ul>
+      <button onClick={() => setFilter(Filter.All)}>All</button>
+      <button onClick={() => setFilter(Filter.Active)}>Active</button>
+      <button onClick={() => setFilter(Filter.Completed)}>Completed</button>
     </>
   )
 }
