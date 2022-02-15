@@ -1,4 +1,4 @@
-import { FC, KeyboardEvent, useState } from "react"
+import { ChangeEvent, FC, KeyboardEvent, useState } from "react"
 import TodoItem from "./TodoItem"
 import { Todo } from "./types"
 
@@ -15,6 +15,15 @@ const TodoList: FC = () => {
     setInputValue('')
   }
 
+  const onToggleIsCompleted = (e: ChangeEvent, index: number) => {
+    const item = todoList[index]
+    setTodoList([
+      ...todoList.slice(0, index),
+      {...item, isCompleted: !item.isCompleted},
+      ...todoList.slice(index + 1),
+    ])
+  }
+  
   return (
     <>
       <input
@@ -27,7 +36,9 @@ const TodoList: FC = () => {
         {todoList.map((todoItem, index) => (
           <TodoItem
             key={index}
+            index={index}
             todo={todoItem}
+            onToggleIsCompleted={onToggleIsCompleted}
           />
         ))}
       </ul>
