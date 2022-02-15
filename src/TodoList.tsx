@@ -1,4 +1,5 @@
 import { FC, KeyboardEvent, useState } from "react"
+import TodoItem from "./TodoItem"
 import { Todo } from "./types"
 
 const TodoList: FC = () => {
@@ -22,6 +23,14 @@ const TodoList: FC = () => {
         onChange={e => setInputValue(e.target.value)}
         onKeyDown={handleEnter}
       />
+      <ul>
+        {todoList.map((todoItem, index) => (
+          <TodoItem
+            key={index}
+            todo={todoItem}
+          />
+        ))}
+      </ul>
     </>
   )
 }
