@@ -25,6 +25,10 @@ const TodoList: FC = () => {
     ])
   }
 
+  const clearCompleted = () => {
+    setTodoList(todoList.filter((todo) => !todo.isCompleted))
+  }
+
   const displayTodoList = useMemo(() => {
     switch (filter) {
       case Filter.All:
@@ -35,6 +39,10 @@ const TodoList: FC = () => {
         return todoList.filter((todo) => todo.isCompleted)
     }
   }, [todoList, filter])
+
+  const remainTodoCount = useMemo(() => {
+    return todoList.filter((todo) => !todo.isCompleted).length
+  }, [todoList])
   
   return (
     <>
@@ -56,7 +64,8 @@ const TodoList: FC = () => {
           />
         ))}
       </ul>
-      <footer className="text-sm p-2">
+      <footer className="text-sm grid grid-cols-3 p-1">
+        <div className="flex items-center">{remainTodoCount} items left</div>
         <div className="flex justify-center">
           <div
             onClick={() => setFilter(Filter.All)}
@@ -76,6 +85,9 @@ const TodoList: FC = () => {
           >
             Completed
           </div>
+        </div>
+        <div className="flex justify-end items-center">
+          <div onClick={() => clearCompleted()} className="cursor-pointer">Clear completed</div>
         </div>
       </footer>
     </>
