@@ -9,11 +9,16 @@ interface TodoItemProps {
 
 const TodoItem: FC<TodoItemProps> = ({ todo, index, onToggleIsCompleted }: TodoItemProps) => {
   return (
-    <li>
-      <span>
-        <input type="checkbox" checked={todo.isCompleted} onChange={(e) => onToggleIsCompleted(e, index)} />
-      </span>
-      <span>{todo.name}</span>
+    <li className="border-b">
+      <div className="flex items-center">
+        <input
+          type="checkbox"
+          checked={todo.isCompleted}
+          onChange={(e) => onToggleIsCompleted(e, index)}
+          className="ml-2 w-8 h-8"
+        />
+        <label className="p-4">{todo.name}</label>
+      </div>
     </li>
   )
 }

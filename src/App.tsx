@@ -3,10 +3,10 @@ import TodoList from './TodoList';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="relative shadow-lg mt-28 bg-white">
+      <h1 className="absolute -top-20 w-full text-pink-200 text-7xl text-center">
         todos
-      </header>
+      </h1>
       <TodoList />
     </div>
   );
