@@ -25,6 +25,15 @@ const TodoList: FC = () => {
     ])
   }
 
+  const onEditTodoName = (name: string, index: number) => {
+    const item = todoList[index]
+    setTodoList([
+      ...todoList.slice(0, index),
+      {...item, name },
+      ...todoList.slice(index + 1),
+    ])
+  }
+
   const clearCompleted = () => {
     setTodoList(todoList.filter((todo) => !todo.isCompleted))
   }
@@ -61,6 +70,7 @@ const TodoList: FC = () => {
             index={index}
             todo={todoItem}
             onToggleIsCompleted={onToggleIsCompleted}
+            onEditTodoName={onEditTodoName}
           />
         ))}
       </ul>
